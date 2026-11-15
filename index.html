@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Bloquea cualquier conexión de red: la app no puede enviar ni cargar nada de internet -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data: 'self'; manifest-src 'self'; worker-src 'self'">
+<title>Nuestro Menú</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Nuestro Menú">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1d1a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --bg:#faf6ef; --card:#ffffff; --soft:#f1ece2; --line:#e6dfd2;
+  --text:#2c2a26; --muted:#7a7468;
+  --green:#5f9470; --green-d:#4a7a5a; --green-l:#e3efe5;
+  --warm:#d98a5b; --warm-l:#fbeadf; --danger:#c0564b;
+  --shadow:0 2px 10px rgba(70,55,30,.07);
+}
+:root[data-theme=dark]{
+  --bg:#1a1d1a; --card:#252925; --soft:#2e332e; --line:#3a403a;
+  --text:#eeece6; --muted:#a39f94;
+  --green:#86bb95; --green-d:#a4d1b0; --green-l:#2c3b30;
+  --warm:#e6a077; --warm-l:#40322a; --danger:#e58278;
+  --shadow:0 2px 10px rgba(0,0,0,.3);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=light]){
+    --bg:#1a1d1a; --card:#252925; --soft:#2e332e; --line:#3a403a;
+    --text:#eeece6; --muted:#a39f94;
+    --green:#86bb95; --green-d:#a4d1b0; --green-l:#2c3b30;
+    --warm:#e6a077; --warm-l:#40322a; --danger:#e58278;
+    --shadow:0 2px 10px rgba(0,0,0,.3);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-bottom:84px}
+h1,h2,h3,h4{margin:0;line-height:1.25}
+h1{font-size:1.9rem;letter-spacing:-.02em}
+h2{font-size:1.2rem;margin:26px 0 12px}
+h3{font-size:1.08rem}
+h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+h4 small{text-transform:none;letter-spacing:0;font-weight:400}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{max-width:1040px;margin:auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
+.logo{font-weight:700;font-size:1.15rem;white-space:nowrap}
+.logo span{color:var(--green)}
+nav{display:flex;gap:4px}
+nav button{border:0;background:none;cursor:pointer;border-radius:14px;padding:8px 14px;min-height:48px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:6px}
+nav button.on{background:var(--green-l);color:var(--green-d)}
+nav .ni{font-size:1.25rem}
+@media (max-width:799px){
+  nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
+  nav button{flex:1;flex-direction:column;gap:0;font-size:.72rem;padding:6px 2px;min-height:58px;justify-content:center}
+}
+@media (min-width:800px){body{padding-bottom:40px} nav{margin-left:auto}}
+main{max-width:1040px;margin:auto;padding:22px 16px}
+.sub{color:var(--muted);margin-top:4px}
+header{padding-top:env(safe-area-inset-top)}
+.hero{border-radius:26px;background:linear-gradient(135deg,#d9ebdb 0%,#f3ecd9 60%,#fbe3cf 100%);color:#22352a;display:grid;grid-template-columns:1fr;overflow:hidden;box-shadow:var(--shadow)}
+.hero svg{width:100%;height:190px;display:block}
+.herotxt{padding:0 22px 22px}
+.herotxt p{color:#4d6455;margin-top:4px}
+.herotag{display:inline-block;background:rgba(255,255,255,.7);border-radius:99px;padding:3px 12px;font-size:.8rem;font-weight:700;color:#3f7150;margin-bottom:8px}
+@media (min-width:640px){.hero{grid-template-columns:1fr 360px;align-items:center}.hero svg{height:230px;order:2}.herotxt{padding:26px 10px 26px 30px}.herotxt h1{font-size:2.3rem}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.grid3{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.grow{flex:1}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 16px;min-height:48px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center}
+.btn:hover{border-color:var(--green)}
+.btn.pri{background:var(--green);border-color:var(--green);color:#fff}
+:root[data-theme=dark] .btn.pri{color:#142017}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .btn.pri{color:#142017}}
+.btn.ok{background:var(--green-l);border-color:var(--green);color:var(--green-d)}
+.btn.warn{color:var(--danger)}
+.btn.sm{min-height:40px;padding:6px 12px;font-size:.9rem}
+.btn.ic{padding:6px;min-width:40px}
+:focus-visible{outline:3px solid var(--warm);outline-offset:2px}
+.seg{display:inline-flex;background:var(--soft);border-radius:14px;padding:4px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;border-radius:11px;padding:8px 14px;min-height:42px;cursor:pointer;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--text);box-shadow:var(--shadow)}
+.chip{display:inline-block;background:var(--soft);border-radius:999px;padding:2px 10px;font-size:.82rem;color:var(--muted);white-space:nowrap}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.ricon{width:54px;height:54px;flex:none;border-radius:16px;background:var(--warm-l);display:grid;place-items:center;font-size:1.7rem}
+.rhead{display:flex;gap:14px;align-items:center}
+.mlabel{font-weight:700;color:var(--green-d);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em}
+.meal{display:flex;flex-direction:column;gap:14px}
+.meal.done{border-color:var(--green)}
+.meal .btn{flex:1}
+.prog{height:10px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:10px}
+.prog i{display:block;height:100%;background:var(--green);border-radius:99px}
+.mini{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left}
+.mini:first-of-type{border-top:0}
+.mini .e{font-size:1.4rem}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:16px 0}
+.days button{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:8px 2px;cursor:pointer;min-height:64px;display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:600}
+.days button small{font-weight:400;font-size:.8rem;color:var(--muted)}
+.days button.on{background:var(--green);border-color:var(--green);color:#fff}
+.days button.on small{color:#fff}
+.days button.today:not(.on){border-color:var(--warm);border-width:2px}
+.slot{margin-bottom:16px}
+.slot.done{border-color:var(--green)}
+.slotbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.rcols{display:grid;gap:20px;grid-template-columns:1fr;margin-top:18px}
+@media (min-width:700px){.rcols{grid-template-columns:5fr 7fr}}
+.ings{list-style:none;margin:0;padding:0}
+.ings li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.ings b{font-weight:600;color:var(--green-d);white-space:nowrap}
+.steps{margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 12px 40px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--green-l);color:var(--green-d);font-weight:700;display:grid;place-items:center;font-size:.9rem}
+.rc{cursor:pointer;display:flex;flex-direction:column;gap:10px;position:relative;text-align:left;width:100%}
+.rc:hover{border-color:var(--green)}
+.fav{border:0;background:none;cursor:pointer;font-size:1.5rem;line-height:1;padding:8px;color:var(--line);border-radius:12px}
+.fav.on{color:var(--warm)}
+.rc .fav{position:absolute;top:8px;right:8px}
+input[type=text],input[type=search],input[type=number],select,textarea{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;min-height:46px;width:100%}
+textarea{min-height:150px;resize:vertical}
+label.f{display:block;font-weight:600;font-size:.9rem;margin:14px 0 6px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0}
+.toolbar input[type=search]{flex:1;min-width:180px}
+.empty{color:var(--muted);text-align:center;padding:30px 10px}
+/* compra */
+.srow{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.srow:first-of-type{border-top:0}
+.check{width:34px;height:34px;flex:none;border-radius:10px;border:2px solid var(--line);background:var(--card);cursor:pointer;color:transparent;font-weight:700;font-size:1.1rem;padding:0}
+.bought .check{background:var(--green);border-color:var(--green);color:#fff}
+.bought .sname{text-decoration:line-through;color:var(--muted)}
+.sname{flex:1;min-width:0}
+.sqty{width:118px!important;min-height:40px!important;padding:6px 10px!important;text-align:right;flex:none}
+.sqty.ov{border-color:var(--warm)}
+.gtitle{font-weight:700;margin:0 0 6px}
+/* modal */
+.ov-bg{position:fixed;inset:0;background:rgba(20,20,15,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--bg);width:100%;max-width:760px;max-height:92vh;overflow:auto;border-radius:24px 24px 0 0;padding:20px 18px 26px}
+@media (min-width:700px){.ov-bg{align-items:center;padding:20px}.modal{border-radius:24px;padding:26px}}
+.mtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}
+.ingrow{display:grid;grid-template-columns:70px 100px 1fr 44px;gap:6px;margin-bottom:6px}
+@media (max-width:480px){.ingrow{grid-template-columns:56px 78px 1fr 40px}}
+.emo{display:flex;flex-wrap:wrap;gap:4px}
+.emo button{border:1px solid var(--line);background:var(--card);border-radius:10px;font-size:1.3rem;width:42px;height:42px;cursor:pointer}
+.emo button.on{border-color:var(--green);background:var(--green-l)}
+#toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:99px;z-index:30;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
+#toast.show{opacity:1}
+.note{background:var(--green-l);border-radius:14px;padding:12px 14px;font-size:.92rem}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <div class="logo">🥗 Nuestro <span>Menú</span></div>
+  <nav id="nav"></nav>
+</div></header>
+<main id="main"></main>
+<div id="modal"></div>
+<div id="toast" role="status"></div>
+<datalist id="units"><option>ud<option>g<option>ml<option>cda<option>cdta<option>rebanadas<option>lonchas<option>latas<option>dientes</datalist>
+
+<script>
+'use strict';
+/* ============ RECETAS INICIALES (en orden: S1 lunes desayuno, S1 lunes cena, ...) ============ */
+// [nombre, categoría d/c, minutos, dificultad, icono, "Ingrediente:cantidad:unidad;...", [pasos]]
+const SEED=[
+// ---------- SEMANA 1 ----------
+["Tostadas integrales con huevos revueltos y tomate cherry","d",10,"Fácil","🍳","Pan integral:4:rebanadas;Huevos:4:ud;Tomates cherry:150:g;Aceite de oliva;Sal;Pimienta",
+ ["Tuesta las rebanadas de pan.","Bate los huevos con una pizca de sal y pimienta.","Calienta un hilo de aceite en una sartén a fuego medio-bajo y cuaja los huevos removiendo suavemente 2-3 minutos, hasta que queden jugosos.","Corta los tomates cherry por la mitad y alíñalos con sal y unas gotas de aceite.","Reparte el revuelto sobre las tostadas y acompaña con los tomates."]],
+["Pollo salteado con pimientos y judías verdes","c",20,"Fácil","🍗","Pechuga de pollo:350:g;Pimiento rojo:1:ud;Pimiento verde:1:ud;Judías verdes:250:g;Ajo:1:dientes;Salsa de soja:1:cda;Aceite de oliva;Sal;Pimienta",
+ ["Corta el pollo en tiras, los pimientos en bastones y las judías en trozos de 3-4 cm.","Cuece las judías 5 minutos en agua hirviendo con sal y escúrrelas.","Dora el pollo salpimentado en una sartén grande con aceite a fuego fuerte, 4-5 minutos. Resérvalo.","En la misma sartén saltea los pimientos y el ajo picado 4 minutos.","Añade las judías, el pollo y la salsa de soja, saltea 2 minutos más y sirve."]],
+["Wrap de huevo, pavo y espinacas","d",10,"Fácil","🌯","Tortillas de avena:2:ud;Huevos:3:ud;Pechuga de pavo en lonchas:4:lonchas;Espinacas frescas:60:g;Aceite de oliva;Sal",
+ ["Saltea las espinacas en una sartén con unas gotas de aceite 1 minuto, hasta que se ablanden.","Añade los huevos batidos con sal y remueve hasta que cuajen.","Calienta las tortillas de avena 20 segundos por lado en otra sartén o en el microondas.","Reparte el pavo y el revuelto sobre cada tortilla, enrolla y corta por la mitad."]],
+["Tortilla de espinacas y feta con ensalada","c",15,"Fácil","🥬","Huevos:5:ud;Espinacas frescas:150:g;Queso feta:80:g;Ensalada variada:100:g;Tomate:1:ud;Aceite de oliva;Vinagre;Sal",
+ ["Saltea las espinacas con un hilo de aceite 2 minutos y escurre el agua que suelten.","Bate los huevos con poca sal (el feta ya es salado) y mezcla con las espinacas y el feta desmenuzado.","Cuaja la mezcla en una sartén antiadherente a fuego medio 3-4 minutos, dale la vuelta con un plato y cocina 2 minutos más.","Aliña la ensalada y el tomate troceado con aceite, vinagre y sal.","Sirve la tortilla en porciones junto a la ensalada."]],
+["Yogur griego con fresas y nueces","d",5,"Fácil","🍓","Yogur griego natural:300:g;Fresas:200:g;Nueces:30:g;Miel:2:cdta",
+ ["Lava las fresas, quítales el rabito y córtalas en trozos.","Reparte el yogur en dos cuencos.","Añade las fresas y las nueces troceadas por encima, y termina con un hilo de miel si os apetece."]],
+["Noodles de arroz con huevo y verduras","c",20,"Fácil","🍜","Noodles de arroz:150:g;Huevos:3:ud;Zanahoria:1:ud;Calabacín:1:ud;Pimiento rojo:1:ud;Ajo:1:dientes;Salsa de soja:2:cda;Aceite de oliva",
+ ["Hidrata los noodles en agua caliente según indique el paquete (unos 5 minutos), escúrrelos y pásalos por agua fría.","Corta la zanahoria, el calabacín y el pimiento en tiras finas.","Saltea las verduras con el ajo picado y un poco de aceite a fuego fuerte 5 minutos, que queden crujientes.","Aparta las verduras a un lado, cuaja los huevos batidos en el hueco y trocéalos.","Añade los noodles y la salsa de soja, mezcla todo 1-2 minutos y sirve."]],
+["Arepa con perico venezolano","d",25,"Media","🫓","Harina de maíz precocida:150:g;Huevos:4:ud;Tomate:1:ud;Cebolla:0.5:ud;Aceite de oliva;Sal",
+ ["Mezcla la harina con unos 275 ml de agua tibia y una pizca de sal. Amasa hasta que no se pegue y deja reposar 3 minutos (añade un poco más de agua o harina si hace falta).","Forma 4 arepas de 1 cm de grosor aproximadamente.","Cocínalas en una sartén o plancha apenas engrasada a fuego medio, 5-6 minutos por lado, hasta que estén doradas y suenen huecas al golpearlas.","Mientras, sofríe la cebolla y el tomate picados con un poco de aceite 4 minutos.","Añade los huevos batidos con sal y remueve hasta que cuajen, jugosos.","Abre las arepas y rellénalas con el perico."]],
+["Ensalada de atún, huevo cocido y aguacate","c",15,"Fácil","🥗","Atún al natural:2:latas;Huevos:3:ud;Aguacate:1:ud;Ensalada variada:150:g;Tomates cherry:150:g;Aceite de oliva;Vinagre;Sal",
+ ["Cuece los huevos 10 minutos desde que el agua hierva, enfríalos en agua fría y pélalos.","Reparte la ensalada en dos platos hondos y añade los cherry cortados por la mitad.","Añade el atún escurrido, el aguacate en láminas y los huevos en cuartos.","Aliña con aceite, vinagre y sal justo antes de servir."]],
+["Tostadas con aguacate y huevo a la plancha","d",10,"Fácil","🥑","Pan integral:4:rebanadas;Aguacate:1:ud;Huevos:2:ud;Limón:0.5:ud;Aceite de oliva;Sal;Pimienta",
+ ["Tuesta el pan.","Aplasta el aguacate con un tenedor y alíñalo con unas gotas de limón, sal y pimienta.","Haz los huevos a la plancha en una sartén antiadherente con unas gotas de aceite, 2-3 minutos.","Unta el aguacate en las tostadas y coloca un huevo encima de dos de ellas."]],
+["Pechuga de pollo con patatas y lima","c",30,"Fácil","🍋","Pechuga de pollo:350:g;Patatas:400:g;Lima:1:ud;Ajo:2:dientes;Pimentón dulce;Aceite de oliva;Sal;Pimienta",
+ ["Pela las patatas, córtalas en dados y cuécelas en el microondas, tapadas y con una cucharada de agua, 6-7 minutos (o hiérvelas 10 minutos).","Aliña el pollo en filetes con el zumo de media lima, el ajo picado, sal y pimienta.","Haz el pollo a la plancha con un poco de aceite, 4-5 minutos por lado, hasta que esté dorado y hecho por dentro.","Saltea las patatas en otra sartén con aceite, sal y pimentón hasta que se doren, unos 5 minutos.","Sirve el pollo con las patatas y la otra media lima en gajos."]],
+["Omelette de champiñones y mozzarella","d",10,"Fácil","🍄","Huevos:4:ud;Champiñones laminados:150:g;Mozzarella rallada:60:g;Aceite de oliva;Sal;Pimienta",
+ ["Saltea los champiñones con un poco de aceite y sal a fuego fuerte 4 minutos, hasta que se doren. Resérvalos.","Bate 2 huevos con sal y pimienta y viértelos en la sartén a fuego medio.","Cuando empiece a cuajar, pon la mitad de los champiñones y de la mozzarella en un lado y dobla la omelette.","Cocina 1 minuto más para que el queso se funda y repite con la segunda omelette."]],
+["Pizza rápida de tortilla de avena","c",15,"Fácil","🍕","Tortillas de avena:2:ud;Tomate triturado:100:g;Mozzarella rallada:100:g;Pechuga de pavo en lonchas:4:lonchas;Champiñones laminados:80:g;Orégano",
+ ["Precalienta el horno a 200 °C (o usa una sartén grande con tapa).","Pon las tortillas sobre papel de horno y úntalas con el tomate triturado.","Reparte la mozzarella, el pavo troceado, los champiñones y el orégano.","Hornea 8-10 minutos, hasta que el queso se funda y los bordes estén crujientes (en sartén tapada, 5-6 minutos a fuego medio-bajo)."]],
+["Tortilla de patatas rápida con fruta","d",20,"Media","🥔","Patatas:300:g;Huevos:4:ud;Fruta de temporada:2:ud;Aceite de oliva;Sal",
+ ["Pela las patatas y córtalas en láminas finas. Ponlas en un bol con sal y una cucharada de aceite, tapa y cuece en el microondas 7-8 minutos, removiendo a mitad.","Bate los huevos en un bol grande, añade las patatas y mezcla aplastando un poco.","Cuaja en una sartén pequeña con unas gotas de aceite a fuego medio 3 minutos.","Dale la vuelta con ayuda de un plato y cocina 2 minutos más.","Sirve con la fruta lavada y troceada."]],
+["Sardinillas con patatas y ensalada","c",25,"Fácil","🐟","Sardinillas en aceite de oliva:2:latas;Patatas:400:g;Ensalada variada:100:g;Tomate:1:ud;Limón:0.5:ud;Aceite de oliva;Vinagre;Sal",
+ ["Lava las patatas y cuécelas con piel en agua con sal 20 minutos, hasta que estén tiernas (o 8-10 minutos en el microondas, pinchadas y tapadas).","Pélalas, córtalas en rodajas y alíñalas templadas con aceite y sal.","Prepara la ensalada con el tomate troceado, aceite, vinagre y sal.","Coloca las sardinillas escurridas sobre las patatas, exprime el limón por encima y sirve con la ensalada."]],
+// ---------- SEMANA 2 ----------
+["Sándwich integral de huevo, pavo y queso","d",10,"Fácil","🥪","Pan integral:4:rebanadas;Huevos:2:ud;Pechuga de pavo en lonchas:4:lonchas;Queso en lonchas:2:lonchas;Aceite de oliva",
+ ["Haz los huevos a la plancha con unas gotas de aceite, rompiendo la yema si la preferís cuajada.","Monta cada sándwich con una loncha de queso, dos de pavo y un huevo.","Tuesta los sándwiches en la sartén 2 minutos por lado, hasta que el pan se dore y el queso se funda.","Corta en diagonal y sirve."]],
+["Revuelto de champiñones y queso con ensalada","c",15,"Fácil","🍄","Huevos:5:ud;Champiñones laminados:250:g;Mozzarella rallada:50:g;Ajo:1:dientes;Ensalada variada:100:g;Aceite de oliva;Vinagre;Sal",
+ ["Saltea el ajo picado y los champiñones con aceite a fuego fuerte 5 minutos, hasta que pierdan el agua y se doren.","Baja el fuego, añade los huevos batidos con sal y remueve despacio.","Cuando esté casi cuajado, añade el queso y mezcla hasta que se funda.","Sirve con la ensalada aliñada con aceite, vinagre y sal."]],
+["Arepa con huevo y aguacate","d",25,"Media","🫓","Harina de maíz precocida:150:g;Huevos:2:ud;Aguacate:1:ud;Aceite de oliva;Sal",
+ ["Mezcla la harina con unos 275 ml de agua tibia y una pizca de sal, amasa y deja reposar 3 minutos.","Forma 4 arepas de 1 cm de grosor y cocínalas en una sartén apenas engrasada 5-6 minutos por lado.","Haz los huevos revueltos o a la plancha con unas gotas de aceite.","Corta el aguacate en láminas y sálalo ligeramente.","Abre las arepas y rellénalas con huevo y aguacate."]],
+["Chuletas a la plancha con patatas y verduras","c",30,"Fácil","🥩","Chuletas de cerdo:4:ud;Patatas:400:g;Calabacín:1:ud;Pimiento rojo:1:ud;Ajo:1:dientes;Aceite de oliva;Sal;Pimienta",
+ ["Corta las patatas en dados y cuécelas en el microondas, tapadas, 6-7 minutos.","Corta el calabacín en medias lunas y el pimiento en tiras.","Saltea las verduras con el ajo y un poco de aceite 6-7 minutos. Añade las patatas y dora todo junto 3 minutos más.","Salpimienta las chuletas y hazlas en una plancha muy caliente, 3-4 minutos por lado.","Sirve las chuletas con las patatas y verduras."]],
+["Yogur griego con frutos rojos y almendras","d",5,"Fácil","🫐","Yogur griego natural:300:g;Frutos rojos:150:g;Almendras:30:g;Miel:2:cdta",
+ ["Si los frutos rojos son congelados, descongélalos 1 minuto en el microondas o sácalos la noche anterior.","Reparte el yogur en dos cuencos.","Añade los frutos rojos, las almendras troceadas y un hilo de miel si os apetece."]],
+["Wrap de pollo, lechuga y salsa de yogur","c",20,"Fácil","🌯","Tortillas de avena:2:ud;Pechuga de pollo:300:g;Ensalada variada:80:g;Tomate:1:ud;Yogur griego natural:100:g;Limón:0.5:ud;Aceite de oliva;Sal;Pimienta",
+ ["Corta el pollo en tiras, salpimiéntalo y dóralo en una sartén con aceite 6-7 minutos.","Mezcla el yogur con el zumo de limón, sal, pimienta y unas gotas de aceite.","Calienta las tortillas unos segundos por cada lado.","Reparte la ensalada, el tomate en dados, el pollo y la salsa de yogur.","Enrolla apretando bien y corta por la mitad."]],
+["Huevos en salsa de tomate y pimientos","d",20,"Fácil","🍅","Huevos:4:ud;Tomate triturado:300:g;Pimiento rojo:1:ud;Cebolla:0.5:ud;Ajo:1:dientes;Pan integral:2:rebanadas;Pimentón dulce;Aceite de oliva;Sal",
+ ["Sofríe la cebolla, el pimiento en dados y el ajo picado con aceite 5 minutos.","Añade el tomate triturado, sal y media cucharadita de pimentón. Cocina 6-8 minutos a fuego medio.","Haz cuatro huecos en la salsa y casca un huevo en cada uno.","Tapa y cocina 4-5 minutos, hasta que la clara cuaje y la yema quede a vuestro gusto.","Sirve en la misma sartén con el pan tostado."]],
+["Ensalada templada de judías, atún y huevo","c",20,"Fácil","🥗","Judías verdes:300:g;Atún al natural:2:latas;Huevos:2:ud;Tomates cherry:100:g;Aceite de oliva;Vinagre;Sal",
+ ["Cuece los huevos 10 minutos, enfríalos y pélalos.","Corta las judías en trozos y cuécelas en agua con sal 8-10 minutos. Escúrrelas.","Mezcla las judías aún templadas con el atún escurrido y los cherry partidos.","Aliña con aceite, vinagre y sal, y corona con los huevos en cuartos."]],
+["Wrap de huevo, espinacas y feta","d",10,"Fácil","🌯","Tortillas de avena:2:ud;Huevos:3:ud;Espinacas frescas:80:g;Queso feta:50:g;Aceite de oliva;Pimienta",
+ ["Saltea las espinacas con unas gotas de aceite 1 minuto.","Añade los huevos batidos con pimienta y remueve hasta que cuajen.","Calienta las tortillas unos segundos.","Reparte el revuelto, desmenuza el feta por encima, enrolla y sirve."]],
+["Huevos al plato con tomate y mozzarella","c",20,"Fácil","🍳","Huevos:4:ud;Tomate triturado:300:g;Mozzarella rallada:80:g;Ajo:1:dientes;Pan integral:2:rebanadas;Orégano;Aceite de oliva;Sal",
+ ["Precalienta el horno a 200 °C.","Sofríe el ajo picado con aceite 1 minuto, añade el tomate, sal y orégano, y cocina 5 minutos.","Reparte la salsa en dos cazuelitas o una fuente pequeña apta para horno.","Casca los huevos encima y cubre con la mozzarella.","Hornea 8-10 minutos, hasta que la clara cuaje. Sirve con el pan tostado."]],
+["Tostadas francesas con fresas","d",15,"Fácil","🍞","Pan integral:4:rebanadas;Huevos:2:ud;Leche:100:ml;Fresas:200:g;Yogur griego natural:100:g;Canela;Aceite de oliva",
+ ["Bate los huevos con la leche y una pizca de canela en un plato hondo.","Empapa las rebanadas de pan unos segundos por cada lado.","Dóralas en una sartén antiadherente con unas gotas de aceite, 2 minutos por lado.","Sirve con las fresas troceadas y una cucharada de yogur por encima."]],
+["Pollo con champiñones y patatas salteadas","c",30,"Fácil","🍗","Pechuga de pollo:350:g;Champiñones laminados:250:g;Patatas:400:g;Ajo:2:dientes;Perejil;Aceite de oliva;Sal;Pimienta",
+ ["Corta las patatas en dados y cuécelas en el microondas, tapadas, 6-7 minutos.","Corta el pollo en dados, salpimiéntalo y dóralo con aceite 5-6 minutos. Resérvalo.","En la misma sartén saltea los champiñones con el ajo picado 5 minutos.","Dora las patatas en otra sartén con aceite y sal hasta que estén crujientes.","Junta el pollo con los champiñones, espolvorea perejil y sirve con las patatas."]],
+["Tortitas de maíz con huevo y aguacate","d",10,"Fácil","🌽","Tortitas de maíz:4:ud;Huevos:2:ud;Aguacate:1:ud;Tomates cherry:100:g;Limón:0.5:ud;Sal",
+ ["Cuece los huevos 10 minutos, enfríalos, pélalos y córtalos en rodajas.","Aplasta el aguacate con unas gotas de limón y sal.","Unta el aguacate sobre las tortitas de maíz.","Coloca encima el huevo y los cherry en mitades, y sirve enseguida para que no se ablanden."]],
+["Tortilla de patata y cebolla con ensalada","c",35,"Media","🥔","Patatas:500:g;Cebolla:1:ud;Huevos:5:ud;Ensalada variada:100:g;Tomate:1:ud;Aceite de oliva;Vinagre;Sal",
+ ["Pela las patatas y córtalas en láminas finas; corta la cebolla en juliana.","Cocínalas juntas con sal en una sartén con aceite a fuego medio-bajo, removiendo, unos 15-18 minutos hasta que estén tiernas. Escurre el aceite.","Bate los huevos en un bol grande, añade la patata y la cebolla y deja reposar 2 minutos.","Cuaja la mezcla en la sartén con unas gotas de aceite 3-4 minutos, dale la vuelta con un plato y cocina 2-3 minutos más.","Sirve con la ensalada y el tomate aliñados."]],
+// ---------- SEMANA 3 ----------
+["Tostadas con huevo, feta y tomate","d",10,"Fácil","🍅","Pan integral:4:rebanadas;Huevos:2:ud;Queso feta:60:g;Tomate:1:ud;Orégano;Aceite de oliva;Sal",
+ ["Tuesta el pan.","Corta el tomate en rodajas finas y repártelo sobre las tostadas con una pizca de sal.","Haz los huevos revueltos o a la plancha con unas gotas de aceite.","Coloca el huevo sobre el tomate, desmenuza el feta por encima y termina con orégano."]],
+["Noodles de arroz con pollo y verduras","c",25,"Fácil","🍜","Noodles de arroz:150:g;Pechuga de pollo:300:g;Zanahoria:1:ud;Pimiento rojo:1:ud;Calabacín:1:ud;Ajo:1:dientes;Salsa de soja:2:cda;Aceite de oliva",
+ ["Hidrata los noodles en agua caliente según el paquete, escúrrelos y pásalos por agua fría.","Corta el pollo en tiras finas y las verduras en bastones.","Dora el pollo con aceite a fuego fuerte 4-5 minutos y resérvalo.","Saltea las verduras con el ajo picado 5 minutos.","Añade el pollo, los noodles y la salsa de soja, mezcla 2 minutos y sirve."]],
+["Wrap de pavo, huevo y queso fundido","d",10,"Fácil","🌯","Tortillas de avena:2:ud;Huevos:2:ud;Pechuga de pavo en lonchas:4:lonchas;Queso en lonchas:2:lonchas;Aceite de oliva",
+ ["Haz un revuelto con los huevos y unas gotas de aceite.","Pon sobre cada tortilla una loncha de queso, dos de pavo y la mitad del revuelto.","Enrolla o dobla por la mitad.","Dora el wrap en la sartén 1-2 minutos por lado, hasta que el queso se funda."]],
+["Tortilla de pollo desmenuzado y pimientos","c",25,"Fácil","🍳","Huevos:5:ud;Pechuga de pollo:250:g;Pimiento rojo:1:ud;Pimiento verde:1:ud;Cebolla:0.5:ud;Aceite de oliva;Sal",
+ ["Cuece el pollo en agua con sal 12-15 minutos y desmenúzalo con dos tenedores. (Si cueces 150 g más, lo tendrás listo para la arepa del jueves.)","Sofríe la cebolla y los pimientos en tiras finas con aceite 6-7 minutos.","Bate los huevos con sal y mézclalos con el pollo y las verduras.","Cuaja en la sartén a fuego medio 3-4 minutos, dale la vuelta con un plato y cocina 2 minutos más."]],
+["Yogur con plátano, fresas y nueces","d",5,"Fácil","🍌","Yogur griego natural:300:g;Plátano:1:ud;Fresas:150:g;Nueces:30:g",
+ ["Corta el plátano en rodajas y las fresas en trozos.","Reparte el yogur en dos cuencos.","Añade la fruta y las nueces troceadas por encima."]],
+["Ensalada de atún, feta, aceitunas y tomate","c",10,"Fácil","🥗","Atún al natural:2:latas;Queso feta:100:g;Aceitunas negras:60:g;Tomate:2:ud;Ensalada variada:100:g;Orégano;Aceite de oliva;Vinagre",
+ ["Corta los tomates en gajos y el feta en dados.","Reparte la ensalada en dos platos y añade el tomate, el atún escurrido, el feta y las aceitunas.","Aliña con aceite, un poco de vinagre y orégano. Prueba antes de añadir sal: el feta y las aceitunas ya aportan bastante."]],
+["Arepa de huevo con pollo desmenuzado","d",30,"Media","🫓","Harina de maíz precocida:150:g;Huevos:3:ud;Pechuga de pollo:150:g;Cebolla:0.5:ud;Aceite de oliva;Sal",
+ ["Si no tienes pollo ya cocido, cuécelo en agua con sal 12-15 minutos y desmenúzalo.","Mezcla la harina con unos 275 ml de agua tibia y sal, amasa, reposa 3 minutos y forma 4 arepas.","Cocínalas en una sartén apenas engrasada 5-6 minutos por lado.","Sofríe la cebolla picada 3 minutos, añade el pollo y después los huevos batidos; remueve hasta que cuajen.","Abre las arepas y rellénalas con el revuelto de pollo."]],
+["Jamoncitos de pollo con judías y patatas","c",45,"Fácil","🍗","Jamoncitos de pollo:4:ud;Patatas:400:g;Judías verdes:250:g;Ajo:2:dientes;Pimentón dulce;Aceite de oliva;Sal;Pimienta",
+ ["Precalienta el horno a 200 °C.","Coloca en una bandeja los jamoncitos y las patatas en gajos. Aliña con aceite, sal, pimienta, pimentón y los ajos aplastados.","Hornea 35-40 minutos, dando la vuelta a mitad, hasta que el pollo esté dorado y bien hecho.","Mientras, cuece las judías en agua con sal 8-10 minutos y escúrrelas.","Sirve los jamoncitos con las patatas y las judías aliñadas con un hilo de aceite."]],
+["Huevos cocidos con tostadas y tomate","d",15,"Fácil","🥚","Huevos:4:ud;Pan integral:4:rebanadas;Tomate:2:ud;Orégano;Aceite de oliva;Sal",
+ ["Cuece los huevos 8-10 minutos desde que hierva el agua, según os guste la yema.","Enfríalos en agua fría y pélalos.","Tuesta el pan y ralla o corta el tomate por encima, con aceite, sal y orégano.","Sirve los huevos partidos por la mitad con una pizca de sal junto a las tostadas."]],
+["Quesadilla de champiñones y mozzarella","c",15,"Fácil","🧀","Tortillas de avena:4:ud;Champiñones laminados:250:g;Mozzarella rallada:120:g;Ajo:1:dientes;Ensalada variada:80:g;Aceite de oliva;Sal",
+ ["Saltea los champiñones con el ajo picado, aceite y sal a fuego fuerte 5 minutos.","Pon una tortilla en la sartén, cubre con la mitad del queso y de los champiñones y tapa con otra tortilla.","Dora 2 minutos por lado a fuego medio, hasta que el queso se funda. Repite con la segunda.","Corta en triángulos y sirve con la ensalada."]],
+["Omelette de pimientos, cebolla y queso","d",15,"Fácil","🫑","Huevos:4:ud;Pimiento rojo:0.5:ud;Pimiento verde:0.5:ud;Cebolla:0.5:ud;Mozzarella rallada:50:g;Aceite de oliva;Sal",
+ ["Pica los pimientos y la cebolla en dados pequeños.","Sofríelos con un poco de aceite y sal 6-7 minutos, hasta que estén tiernos. Resérvalos.","Bate 2 huevos con sal y cuájalos en la sartén a fuego medio.","Rellena con la mitad de las verduras y del queso, dobla y cocina 1 minuto más. Repite con la segunda omelette."]],
+["Huevos al plato con patatas y espinacas","c",30,"Fácil","🍳","Huevos:4:ud;Patatas:400:g;Espinacas frescas:150:g;Ajo:1:dientes;Pimentón dulce;Aceite de oliva;Sal",
+ ["Corta las patatas en dados pequeños y cuécelas en el microondas, tapadas, 6-7 minutos.","Dóralas en una sartén amplia con aceite, sal y pimentón, unos 5 minutos.","Añade el ajo picado y las espinacas y saltea 2 minutos, hasta que se ablanden.","Haz cuatro huecos, casca un huevo en cada uno, tapa y cocina 4-5 minutos hasta que la clara cuaje.","Sirve directamente de la sartén."]],
+["Tortitas de arroz con queso, yogur y fruta","d",5,"Fácil","🍘","Tortitas de arroz:4:ud;Queso fresco:120:g;Yogur griego natural:250:g;Fruta de temporada:2:ud",
+ ["Corta el queso fresco en láminas y repártelo sobre las tortitas de arroz.","Lava y trocea la fruta.","Sirve el yogur en dos cuencos con la fruta por encima, junto a las tortitas."]],
+["Huevos rellenos de atún y yogur con ensalada","c",20,"Fácil","🥚","Huevos:6:ud;Atún al natural:2:latas;Yogur griego natural:80:g;Ensalada variada:150:g;Tomates cherry:150:g;Limón:0.5:ud;Aceite de oliva;Sal;Pimienta",
+ ["Cuece los huevos 10 minutos, enfríalos, pélalos y córtalos por la mitad a lo largo.","Saca las yemas y aplástalas con el atún escurrido, el yogur, unas gotas de limón, sal y pimienta.","Rellena las claras con la mezcla.","Sirve sobre la ensalada con los cherry, aliñada con aceite y sal."]]
+];
+
+/* ============ UTILIDADES ============ */
+const KEY='nuestroMenu.v1';
+const DAYS=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+const MEAL={d:'☀️ Desayuno',c:'🌙 Cena'};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').trim();
+const uid=()=>'r'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function monday(d){const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function parseIso(s){const p=String(s).split('-').map(Number);return new Date(p[0],p[1]-1,p[2])}
+function fq(q){const w=Math.floor(q),f=Math.round((q-w)*100)/100,fr={0.25:'¼',0.5:'½',0.75:'¾'}[f];
+  return fr?(w||'')+fr:String(Math.round(q*100)/100).replace('.',',')}
+function fu(q,u){return (q<=1&&/^(rebanadas|lonchas|latas|dientes)$/.test(u))?u.slice(0,-1):(u||'')}
+function ingText(i){return i.q==null?'al gusto':(fq(i.q)+' '+fu(i.q,i.u)).trim()}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2200)}
+
+/* ============ ESTADO Y ALMACENAMIENTO ============ */
+function seed(){
+  const recipes=SEED.map((r,i)=>({id:'r'+(i+1),name:r[0],cat:r[1],time:r[2],diff:r[3],icon:r[4],fav:false,
+    ing:r[5].split(';').map(s=>{const p=s.split(':');return {n:p[0],q:p[1]?+p[1]:null,u:p[2]||''}}),steps:r[6].slice()}));
+  const plan=[0,1,2].map(w=>[0,1,2,3,4,5,6].map(d=>({d:'r'+(w*14+d*2+1),c:'r'+(w*14+d*2+2)})));
+  return {v:1,recipes,plan,done:{},shop:{weeks:[true,true,true],have:{},bought:{},qty:{},extra:[]},theme:'auto',start:iso(monday(new Date()))};
+}
+function valid(o){return o&&Array.isArray(o.recipes)&&o.recipes.every(r=>r&&r.id&&r.name&&Array.isArray(r.ing)&&Array.isArray(r.steps))
+  &&Array.isArray(o.plan)&&o.plan.length===3&&o.plan.every(w=>Array.isArray(w)&&w.length===7)}
+function fix(o){const b=seed();o.done=o.done||{};o.shop=Object.assign(b.shop,o.shop||{});o.theme=o.theme||'auto';o.start=o.start||b.start;return o}
+let storageOk=true;
+function load(){try{const o=JSON.parse(localStorage.getItem(KEY));if(valid(o))return fix(o)}catch(e){}return seed()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));storageOk=true}catch(e){storageOk=false;toast('⚠️ No se pudo guardar en este navegador')}}
+let S=load();
+const U={view:'hoy',pw:0,pd:0,pf:'all',rf:'all',rs:''};
+let M=null; // ventana abierta
+
+const rec=id=>S.recipes.find(r=>r.id===id);
+function curWeek(){const n=Math.round((monday(new Date())-parseIso(S.start))/6048e5);return ((n%3)+3)%3}
+const todayIdx=()=>(new Date().getDay()+6)%7;
+function setCurWeek(w){const m=monday(new Date());m.setDate(m.getDate()-w*7);S.start=iso(m)}
+// Las marcas de "preparada" se asocian a la fecha de esa semana, así se limpian solas en el siguiente ciclo
+function occ(w){const m=monday(new Date());m.setDate(m.getDate()+((w-curWeek()+3)%3)*7);return iso(m)}
+const dk=(w,d,m)=>w+'-'+d+'-'+m;
+const isDone=(w,d,m)=>S.done[dk(w,d,m)]===occ(w);
+function applyTheme(){if(S.theme==='auto')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=S.theme}
+
+/* ============ PIEZAS DE INTERFAZ ============ */
+const chip=t=>`<span class="chip">${t}</span>`;
+const meta=r=>`<div class="meta">${chip('⏱ '+esc(r.time)+' min')}${chip(esc(r.diff))}${chip(MEAL[r.cat])}</div>`;
+function recipeFull(r){return `
+  <div class="rhead"><div class="ricon">${esc(r.icon)}</div><div><h3>${esc(r.name)}</h3>${meta(r)}</div></div>
+  <div class="rcols">
+    <div><h4>Ingredientes <small>· para 2 personas</small></h4><ul class="ings">${r.ing.map(i=>`<li><span>${esc(i.n)}</span><b>${esc(ingText(i))}</b></li>`).join('')}</ul></div>
+    <div><h4>Preparación</h4><ol class="steps">${r.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol></div>
+  </div>`}
+const slotAttr=(w,d,m)=>`data-w="${w}" data-d="${d}" data-m="${m}"`;
+function doneBtn(w,d,m,cls=''){const on=isDone(w,d,m);return `<button class="btn ${cls} ${on?'ok':''}" data-a="done" ${slotAttr(w,d,m)}>${on?'✓ Preparada':'Marcar preparada'}</button>`}
+
+/* Portada: ilustración propia, dibujada dentro del archivo (sin imágenes externas) */
+const COVER=`<svg viewBox="0 0 360 220" role="img" aria-label="Plato con huevo, tostada, aguacate y tomates" preserveAspectRatio="xMidYMid meet">
+<circle cx="52" cy="48" r="26" fill="#fff" opacity=".45"/><circle cx="318" cy="52" r="16" fill="#fff" opacity=".4"/>
+<ellipse cx="186" cy="204" rx="118" ry="9" fill="#22352a" opacity=".08"/>
+<circle cx="186" cy="114" r="88" fill="#fffdf8"/><circle cx="186" cy="114" r="66" fill="none" stroke="#ebe4d6" stroke-width="3"/>
+<g transform="rotate(14 232 88)"><rect x="200" y="56" width="64" height="62" rx="16" fill="#d9a56a"/><rect x="207" y="63" width="50" height="48" rx="11" fill="#f4d9ab"/></g>
+<path d="M130 92c22-20 62-12 72 16s-8 56-40 62-58-12-60-40 12-26 28-38z" fill="#fff" stroke="#efe9dc" stroke-width="2.5"/>
+<circle cx="158" cy="126" r="19" fill="#f6b23c"/><circle cx="152" cy="120" r="5" fill="#fbd27f"/>
+<path d="M214 150c2-18 14-28 30-28 0 18-10 28-30 28z" fill="#6fae7f"/><path d="M228 160c8-12 20-16 32-12-4 14-16 18-32 12z" fill="#8cc49a"/>
+<g transform="translate(74 158) rotate(-28)"><path d="M0-40c14 0 20 16 25 31s6 35-25 35-30-20-25-35 11-31 25-31z" fill="#4f8a63"/><path d="M0-32c10 0 15 13 19 25s4 27-19 27-23-15-19-27 9-25 19-25z" fill="#d7e6aa"/><circle cy="5" r="10.5" fill="#9a6a43"/><circle cx="-3" cy="2" r="3" fill="#b88a62"/></g>
+<circle cx="296" cy="164" r="15" fill="#e2634f"/><circle cx="291" cy="159" r="4" fill="#f0907f"/><path d="M296 151l-5-6m5 6l5-6m-5 6v-7" stroke="#4c8761" stroke-width="3" stroke-linecap="round"/>
+<circle cx="322" cy="140" r="11" fill="#ea7a5f"/><path d="M322 131l-4-5m4 5l4-5" stroke="#4c8761" stroke-width="2.5" stroke-linecap="round"/>
+<path d="M36 112c2-16 12-24 26-24 0 16-9 24-26 24z" fill="#8cc49a"/><path d="M300 96c-2-12 4-20 14-24 4 12-2 20-14 24z" fill="#6fae7f"/>
+<g stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"><path d="M96 40v10m-5-5h10"/><path d="M276 28v8m-4-4h8"/></g></svg>`;
+
+/* ============ VISTAS ============ */
+function vHoy(){
+  const w=curWeek(),d=todayIdx(),now=new Date();
+  const fecha=now.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
+  let n=0;for(let i=0;i<7;i++)for(const m of 'dc')if(isDone(w,i,m))n++;
+  const card=m=>{const r=rec(S.plan[w][d][m]),on=isDone(w,d,m);
+    return `<div class="card meal ${on?'done':''}"><span class="mlabel">${MEAL[m]}</span>${r?`
+      <div class="rhead"><div class="ricon">${esc(r.icon)}</div><div><h3>${esc(r.name)}</h3><div class="meta">${chip('⏱ '+esc(r.time)+' min')}${chip(esc(r.diff))}</div></div></div>
+      <div class="row"><button class="btn pri" data-a="open" data-id="${r.id}" ${slotAttr(w,d,m)}>Ver receta</button>${doneBtn(w,d,m)}</div>`
+      :`<p class="sub">Sin receta asignada.</p><button class="btn pri" data-a="change" ${slotAttr(w,d,m)}>Elegir receta</button>`}</div>`};
+  const t=(d+1)%7,tw=d===6?(w+1)%3:w;
+  const mini=m=>{const r=rec(S.plan[tw][t][m]);return r?`<button class="mini" data-a="open" data-id="${r.id}" ${slotAttr(tw,t,m)}><span class="e">${esc(r.icon)}</span><span class="grow"><small class="sub">${MEAL[m]}</small><br>${esc(r.name)}</span>${chip('⏱ '+esc(r.time)+' min')}</button>`:''};
+  return `<div class="hero">${COVER}<div class="herotxt"><span class="herotag">🥗 Nuestro Menú</span><h1>¿Qué comemos hoy?</h1><p>${esc(fecha.charAt(0).toUpperCase()+fecha.slice(1))} · Semana ${w+1} del menú</p></div></div>
+  <div class="grid2" style="margin-top:20px">${card('d')}${card('c')}</div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card"><h4>Mañana · ${DAYS[t]}</h4>${mini('d')}${mini('c')}</div>
+    <div class="card"><h4>Esta semana</h4><p><b>${n}</b> de 14 comidas preparadas</p><div class="prog"><i style="width:${n/14*100}%"></i></div>
+      <div class="row" style="margin-top:16px"><button class="btn sm" data-a="nav" data-v="plan">📅 Ver planificador</button><button class="btn sm" data-a="nav" data-v="compra">🛒 Lista de compra</button></div></div>
+  </div>`}
+
+function vPlan(){
+  const w=U.pw,d=U.pd,cw=curWeek(),ms=U.pf==='all'?['d','c']:[U.pf];
+  const days=DAYS.map((n,i)=>{const day=S.plan[w][i];
+    const ic=ms.map(m=>{const r=rec(day[m]);return r?esc(r.icon):'·'}).join(' ');
+    const all=ms.every(m=>isDone(w,i,m));
+    return `<button class="${i===d?'on':''} ${w===cw&&i===todayIdx()?'today':''}" data-a="day" data-d="${i}" aria-label="${n}">${n.slice(0,3)}<small>${all?'✓':ic}</small></button>`}).join('');
+  const slots=ms.map(m=>{const r=rec(S.plan[w][d][m]);
+    return `<section class="card slot ${isDone(w,d,m)?'done':''}"><div class="slotbar"><span class="mlabel">${MEAL[m]}</span><span class="grow"></span>
+      <button class="btn sm" data-a="change" ${slotAttr(w,d,m)}>🔄 Cambiar</button>${r?doneBtn(w,d,m,'sm'):''}</div>
+      ${r?recipeFull(r):'<p class="empty">Sin receta asignada. Pulsa «Cambiar» para elegir una.</p>'}</section>`}).join('');
+  return `<h1>Planificador</h1><p class="sub">Elige semana y día para ver qué toca.</p>
+  <div class="toolbar"><div class="seg">${[0,1,2].map(i=>`<button class="${i===w?'on':''}" data-a="week" data-w="${i}">Semana ${i+1}${i===cw?' · actual':''}</button>`).join('')}</div>
+  <div class="seg">${[['all','Todo'],['d','Desayuno'],['c','Cena']].map(f=>`<button class="${U.pf===f[0]?'on':''}" data-a="pfilter" data-f="${f[0]}">${f[1]}</button>`).join('')}</div></div>
+  <div class="days">${days}</div><h2 style="margin-top:8px">${DAYS[d]} · Semana ${w+1}</h2>${slots}`}
+
+function recCards(){
+  const q=norm(U.rs);
+  const list=S.recipes.filter(r=>(U.rf==='all'||(U.rf==='fav'?r.fav:r.cat===U.rf))&&(!q||norm(r.name).includes(q)||r.ing.some(i=>norm(i.n).includes(q))));
+  return list.length?list.map(r=>`<div class="card rc" data-a="open" data-id="${r.id}" tabindex="0" role="button">
+    <div class="ricon">${esc(r.icon)}</div><h3 style="padding-right:30px">${esc(r.name)}</h3>${meta(r)}
+    <button class="fav ${r.fav?'on':''}" data-a="fav" data-id="${r.id}" aria-label="Favorita">${r.fav?'★':'☆'}</button></div>`).join('')
+  :'<p class="empty" style="grid-column:1/-1">No hay recetas que coincidan.</p>'}
+function vRec(){return `<h1>Recetario</h1><p class="sub">${S.recipes.length} recetas · ${S.recipes.filter(r=>r.fav).length} favoritas</p>
+  <div class="toolbar"><input type="search" id="recSearch" placeholder="Buscar receta o ingrediente…" value="${esc(U.rs)}" aria-label="Buscar">
+  <button class="btn pri" data-a="new">＋ Añadir receta</button></div>
+  <div class="seg">${[['all','Todas'],['d','Desayunos'],['c','Cenas'],['fav','★ Favoritas']].map(f=>`<button class="${U.rf===f[0]?'on':''}" data-a="rfilter" data-f="${f[0]}">${f[1]}</button>`).join('')}</div>
+  <div class="grid3" id="recGrid" style="margin-top:16px">${recCards()}</div>`}
+
+const GROUPS=[['🍗 Carne y pescado',/sardin|atun/],['🫙 Despensa',/triturad|aceit|vinagre|sal\b|salsa|pimienta|pimenton|oregano|canela|miel|nuez|nueces|almendra|perejil/],
+  ['🥬 Frutas y verduras',/tomate|pimiento|judia|espinaca|ensalada|lechuga|zanahoria|calabacin|cebolla|ajo|aguacate|limon|lima|fresa|platano|fruta|frutos|champi|patata/],
+  ['🍗 Carne y pescado',/pollo|pavo|chuleta|jamoncito|atun|sardin|cerdo|ternera|salmon/],
+  ['🥚 Huevos y lácteos',/huevo|yogur|queso|mozzarella|leche|feta/],
+  ['🥖 Pan y cereales',/pan\b|tortilla|tortita|harina|noodle|arroz|avena|pasta/]];
+const ORDER=['🥬 Frutas y verduras','🍗 Carne y pescado','🥚 Huevos y lácteos','🥖 Pan y cereales','🫙 Despensa','🧺 Otros'];
+function groupOf(n){const s=norm(n);for(const g of GROUPS)if(g[1].test(s))return g[0];return '🧺 Otros'}
+function shopItems(){
+  const map=new Map();
+  S.plan.forEach((wk,w)=>{if(!S.shop.weeks[w])return;wk.forEach(day=>{for(const m of 'dc'){const r=rec(day[m]);if(!r)continue;
+    r.ing.forEach(i=>{if(!i.n)return;const k=norm(i.n)+'|'+(i.q==null?'':norm(i.u));let it=map.get(k);
+      if(!it){it={k,n:i.n,u:i.u,q:i.q==null?null:0};map.set(k,it)}if(i.q!=null)it.q+=i.q})}})});
+  const out=[...map.values()].map(it=>({k:it.k,n:it.n,def:it.q==null?'al gusto':/^(g|ml)$/.test(it.u)&&it.q>=1000?String(Math.round(it.q/10)/100).replace('.',',')+(it.u==='g'?' kg':' l'):(fq(it.q)+' '+fu(it.q,it.u)).trim()}));
+  S.shop.extra.forEach(x=>out.push({k:'x'+x.id,n:x.n,def:x.q||'',extra:true}));
+  return out.sort((a,b)=>a.n.localeCompare(b.n,'es'))}
+function shopRow(it){const b=S.shop.bought[it.k],ov=!it.extra&&S.shop.qty[it.k]!=null,k=esc(it.k);
+  return `<div class="srow ${b?'bought':''}"><button class="check" data-a="bought" data-k="${k}" aria-label="Marcar ${esc(it.n)} como comprado" aria-pressed="${!!b}">✓</button>
+  <span class="sname">${esc(it.n)}</span>
+  <input type="text" class="sqty ${ov?'ov':''}" data-c="qty" data-k="${k}" value="${esc(ov?S.shop.qty[it.k]:it.def)}" aria-label="Cantidad de ${esc(it.n)}">
+  ${ov?`<button class="btn sm ic" data-a="qtyreset" data-k="${k}" title="Volver a la cantidad calculada">↺</button>`:''}
+  ${it.extra?`<button class="btn sm ic warn" data-a="xdel" data-k="${k}" title="Quitar">✕</button>`
+    :`<button class="btn sm ic ${S.shop.have[it.k]?'ok':''}" data-a="have" data-k="${k}" title="${S.shop.have[it.k]?'Volver a la lista':'Ya lo tenemos en casa'}">🏠</button>`}</div>`}
+function vCompra(){
+  const items=shopItems(),pend=items.filter(i=>!S.shop.have[i.k]),have=items.filter(i=>S.shop.have[i.k]);
+  const nb=pend.filter(i=>S.shop.bought[i.k]).length;
+  const groups={};pend.forEach(i=>{const g=i.extra?'🧺 Otros':groupOf(i.n);(groups[g]=groups[g]||[]).push(i)});
+  return `<h1>Lista de compra</h1><p class="sub">Se calcula sumando los ingredientes de las semanas elegidas.</p>
+  <div class="toolbar"><div class="seg">${[0,1,2].map(i=>`<button class="${S.shop.weeks[i]?'on':''}" data-a="sweek" data-w="${i}" aria-pressed="${S.shop.weeks[i]}">${S.shop.weeks[i]?'✓ ':''}Semana ${i+1}</button>`).join('')}</div>
+  <span class="grow"></span><button class="btn sm" data-a="copy">📋 Copiar lista</button><button class="btn sm" data-a="clearb">Desmarcar comprados</button></div>
+  <p class="sub" style="margin-bottom:14px"><b>${pend.length-nb}</b> por comprar · ${nb} comprados · ${have.length} en casa. Pulsa 🏠 si ya lo tenéis; la cantidad se puede editar.</p>
+  ${pend.length?'':'<p class="empty card">No hay nada que comprar con esta selección.</p>'}
+  <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))">${ORDER.filter(g=>groups[g]).map(g=>`<div class="card"><p class="gtitle">${g}</p>${groups[g].map(shopRow).join('')}</div>`).join('')}</div>
+  <h2>Añadir otro producto</h2>
+  <div class="card row"><input type="text" id="xn" placeholder="Producto (p. ej. café)" style="flex:2;min-width:150px" aria-label="Producto">
+    <input type="text" id="xq" placeholder="Cantidad" style="flex:1;min-width:100px" aria-label="Cantidad"><button class="btn pri" data-a="xadd">Añadir</button></div>
+  ${have.length?`<h2>🏠 Ya tenemos en casa</h2><div class="card">${have.map(shopRow).join('')}</div>`:''}`}
+
+function vAjustes(){const cw=curWeek();return `<h1>Ajustes</h1>
+  <h2>Apariencia</h2><div class="card"><div class="seg">${[['auto','Automático'],['light','☀️ Claro'],['dark','🌙 Oscuro']].map(t=>`<button class="${S.theme===t[0]?'on':''}" data-a="theme" data-t="${t[0]}">${t[1]}</button>`).join('')}</div></div>
+  <h2>¿En qué semana del menú estamos?</h2><div class="card"><p class="sub" style="margin-bottom:10px">El menú rota cada 3 semanas. Cambia aquí la semana actual si queréis empezar por otra.</p>
+    <div class="seg">${[0,1,2].map(i=>`<button class="${i===cw?'on':''}" data-a="curweek" data-w="${i}">Semana ${i+1}</button>`).join('')}</div></div>
+  <h2>Copia de seguridad</h2><div class="card"><p class="sub" style="margin-bottom:12px">Guarda todos vuestros datos (recetas, menú, lista de compra) en un archivo, o recupéralos desde uno.</p>
+    <div class="row"><button class="btn pri" data-a="export">⬇️ Exportar datos (JSON)</button>
+    <label class="btn" tabindex="0">⬆️ Importar datos<input type="file" accept=".json,application/json" data-c="import" hidden></label>
+    <button class="btn warn" data-a="reset">Restablecer menú inicial</button></div></div>
+  <h2>Privacidad</h2><div class="note">🔒 Todo se guarda únicamente en este navegador de vuestro ordenador${storageOk?'':' (⚠️ ahora mismo el navegador no permite guardar)'}. La aplicación no usa internet, cuentas ni servicios externos, y tiene bloqueada cualquier conexión de red.</div>`}
+
+/* ============ VENTANAS (MODALES) ============ */
+function mRecipe(){const r=rec(M.id);if(!r){M=null;return ''}const s=M.slot;
+  return `<div class="mtop"><span class="mlabel">${s?DAYS[s.d]+' · '+MEAL[s.m]+' · Semana '+(s.w+1):'Receta'}</span><button class="btn sm ic" data-a="close" aria-label="Cerrar">✕</button></div>
+  ${recipeFull(r)}
+  <div class="row" style="margin-top:20px">${s?doneBtn(s.w,s.d,s.m)+`<button class="btn" data-a="change" ${slotAttr(s.w,s.d,s.m)}>🔄 Cambiar receta</button>`:''}
+  <button class="btn ${r.fav?'ok':''}" data-a="fav" data-id="${r.id}">${r.fav?'★ Favorita':'☆ Favorita'}</button>
+  <button class="btn" data-a="edit" data-id="${r.id}">✏️ Editar</button><button class="btn warn" data-a="del" data-id="${r.id}">🗑 Eliminar</button></div>`}
+const ingRow=(i={})=>`<div class="ingrow"><input type="text" class="iq" placeholder="Cant." value="${i.q==null?'':esc(String(i.q).replace('.',','))}" aria-label="Cantidad">
+  <input type="text" class="iu" list="units" placeholder="Unidad" value="${esc(i.u||'')}" aria-label="Unidad">
+  <input type="text" class="in" placeholder="Ingrediente" value="${esc(i.n||'')}" aria-label="Ingrediente"><button type="button" class="btn sm ic" data-a="ingdel" aria-label="Quitar ingrediente">✕</button></div>`;
+const EMO='🍳 🥚 🥗 🍗 🐟 🌯 🫓 🍞 🥑 🍅 🍄 🥔 🍜 🍕 🧀 🍓 🥣 🥩 🫑 🥪 🍲 🥦'.split(' ');
+function mEdit(){const r=M.id?rec(M.id):{name:'',cat:'c',time:15,diff:'Fácil',icon:'🍲',ing:[{},{},{}],steps:[]};
+  return `<div class="mtop"><h2 style="margin:0">${M.id?'Editar receta':'Nueva receta'}</h2><button class="btn sm ic" data-a="close" aria-label="Cerrar">✕</button></div>
+  <label class="f" for="eName">Nombre</label><input type="text" id="eName" value="${esc(r.name)}">
+  <div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+    <div><label class="f" for="eCat">Categoría</label><select id="eCat"><option value="d" ${r.cat==='d'?'selected':''}>Desayuno</option><option value="c" ${r.cat==='c'?'selected':''}>Cena</option></select></div>
+    <div><label class="f" for="eTime">Tiempo (minutos)</label><input type="number" id="eTime" min="1" value="${esc(r.time)}"></div>
+    <div><label class="f" for="eDiff">Dificultad</label><select id="eDiff">${['Fácil','Media','Difícil'].map(x=>`<option ${r.diff===x?'selected':''}>${x}</option>`).join('')}</select></div></div>
+  <label class="f">Icono</label><div class="emo" id="eEmo" data-v="${esc(r.icon)}">${EMO.map(e=>`<button type="button" class="${e===r.icon?'on':''}" data-a="emo" data-e="${e}">${e}</button>`).join('')}</div>
+  <label class="f">Ingredientes para 2 personas <small class="sub">(deja la cantidad vacía para «al gusto»)</small></label>
+  <div id="eIng">${r.ing.map(ingRow).join('')}</div><button type="button" class="btn sm" data-a="ingadd">＋ Ingrediente</button>
+  <label class="f" for="eSteps">Preparación <small class="sub">(un paso por línea)</small></label><textarea id="eSteps">${esc(r.steps.join('\n'))}</textarea>
+  <div class="row" style="margin-top:18px"><button class="btn pri grow" data-a="saverec">Guardar receta</button><button class="btn" data-a="close">Cancelar</button></div>`}
+function pickList(){const q=norm(M.q||''),cur=S.plan[M.w][M.d][M.m];
+  const l=S.recipes.filter(r=>(M.all||r.cat===M.m)&&(!q||norm(r.name).includes(q)));
+  return l.length?l.map(r=>`<button class="mini" data-a="pick" data-id="${r.id}"><span class="e">${esc(r.icon)}</span><span class="grow">${esc(r.name)}${r.fav?' ★':''}<br><small class="sub">⏱ ${esc(r.time)} min · ${esc(r.diff)}${r.id===cur?' · <b>actual</b>':''}</small></span></button>`).join(''):'<p class="empty">Sin resultados.</p>'}
+function mPick(){return `<div class="mtop"><div><h2 style="margin:0">Cambiar receta</h2><p class="sub">${DAYS[M.d]} · ${MEAL[M.m]} · Semana ${M.w+1}</p></div><button class="btn sm ic" data-a="close" aria-label="Cerrar">✕</button></div>
+  <input type="search" id="pickSearch" placeholder="Buscar…" aria-label="Buscar receta">
+  <label class="row" style="margin:12px 0"><input type="checkbox" data-c="pickall" ${M.all?'checked':''} style="width:22px;height:22px"> Mostrar también ${M.m==='d'?'las cenas':'los desayunos'}</label>
+  <div class="card" id="pickList">${pickList()}</div>`}
+
+/* ============ RENDER ============ */
+const NAV=[['hoy','🏠','Hoy'],['plan','📅','Plan'],['rec','📖','Recetas'],['compra','🛒','Compra'],['ajustes','⚙️','Ajustes']];
+const VIEWS={hoy:vHoy,plan:vPlan,rec:vRec,compra:vCompra,ajustes:vAjustes};
+function renderModal(){const el=$('#modal');
+  if(!M){el.innerHTML='';document.body.style.overflow='';return}
+  const h=M.type==='recipe'?mRecipe():M.type==='edit'?mEdit():mPick();
+  if(!M){el.innerHTML='';document.body.style.overflow='';return}
+  el.innerHTML=`<div class="ov-bg" data-a="bgclose"><div class="modal" role="dialog" aria-modal="true">${h}</div></div>`;document.body.style.overflow='hidden'}
+function render(){
+  $('#nav').innerHTML=NAV.map(n=>`<button class="${U.view===n[0]?'on':''}" data-a="nav" data-v="${n[0]}"><span class="ni">${n[1]}</span>${n[2]}</button>`).join('');
+  $('#main').innerHTML=VIEWS[U.view]();renderModal()}
+
+/* ============ ACCIONES ============ */
+const A={
+  nav(d){U.view=d.v;if(d.v==='plan'){U.pw=curWeek();U.pd=todayIdx()}M=null;render();scrollTo(0,0)},
+  week(d){U.pw=+d.w;render()}, day(d){U.pd=+d.d;render()}, pfilter(d){U.pf=d.f;render()}, rfilter(d){U.rf=d.f;render()},
+  open(d){M={type:'recipe',id:d.id,slot:d.w!=null?{w:+d.w,d:+d.d,m:d.m}:null};renderModal()},
+  close(){M=null;renderModal()},
+  bgclose(d,e){if(e.target.classList.contains('ov-bg')&&(!M||M.type!=='edit')){M=null;renderModal()}},
+  done(d){const k=dk(d.w,d.d,d.m);if(isDone(+d.w,+d.d,d.m))delete S.done[k];else S.done[k]=occ(+d.w);save();render()},
+  fav(d){const r=rec(d.id);r.fav=!r.fav;save();render()},
+  change(d){M={type:'pick',w:+d.w,d:+d.d,m:d.m,all:false,q:''};renderModal()},
+  pick(d){S.plan[M.w][M.d][M.m]=d.id;save();M=null;render();toast('Receta cambiada')},
+  new(){M={type:'edit',id:null};renderModal()},
+  edit(d){M={type:'edit',id:d.id,back:M&&M.slot};renderModal()},
+  del(d){const r=rec(d.id);if(!confirm('¿Eliminar «'+r.name+'»? Se quitará también del planificador.'))return;
+    S.recipes=S.recipes.filter(x=>x.id!==d.id);S.plan.forEach(w=>w.forEach(day=>{for(const m of 'dc')if(day[m]===d.id)day[m]=null}));
+    save();M=null;render();toast('Receta eliminada')},
+  emo(d,e,el){const box=$('#eEmo');box.dataset.v=d.e;box.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===el))},
+  ingadd(){$('#eIng').insertAdjacentHTML('beforeend',ingRow());$('#eIng').lastElementChild.querySelector('.iq').focus()},
+  ingdel(d,e,el){el.closest('.ingrow').remove()},
+  saverec(){const name=$('#eName').value.trim();if(!name){toast('Escribe un nombre');$('#eName').focus();return}
+    const ing=[...document.querySelectorAll('#eIng .ingrow')].map(row=>{const n=row.querySelector('.in').value.trim(),q=parseFloat(row.querySelector('.iq').value.replace(',','.'));
+      return {n,q:isNaN(q)?null:q,u:row.querySelector('.iu').value.trim()}}).filter(i=>i.n);
+    const steps=$('#eSteps').value.split('\n').map(s=>s.trim().replace(/^\d+[.)]\s*/,'')).filter(Boolean);
+    const data={name,cat:$('#eCat').value,time:Math.max(1,parseInt($('#eTime').value)||10),diff:$('#eDiff').value,icon:$('#eEmo').dataset.v||'🍲',ing,steps};
+    let id=M.id;if(id)Object.assign(rec(id),data);else{id=uid();S.recipes.push(Object.assign({id,fav:false},data))}
+    save();M={type:'recipe',id,slot:M.back||null};render();toast('Receta guardada')},
+  sweek(d){S.shop.weeks[+d.w]=!S.shop.weeks[+d.w];save();render()},
+  bought(d){if(S.shop.bought[d.k])delete S.shop.bought[d.k];else S.shop.bought[d.k]=true;save();render()},
+  have(d){if(S.shop.have[d.k])delete S.shop.have[d.k];else S.shop.have[d.k]=true;save();render()},
+  qtyreset(d){delete S.shop.qty[d.k];save();render()},
+  xadd(){const n=$('#xn').value.trim();if(!n){$('#xn').focus();return}S.shop.extra.push({id:uid(),n,q:$('#xq').value.trim()});save();render()},
+  xdel(d){S.shop.extra=S.shop.extra.filter(x=>'x'+x.id!==d.k);delete S.shop.bought[d.k];save();render()},
+  clearb(){S.shop.bought={};save();render()},
+  copy(){const t=shopItems().filter(i=>!S.shop.have[i.k]&&!S.shop.bought[i.k]).map(i=>{const q=!i.extra&&S.shop.qty[i.k]!=null?S.shop.qty[i.k]:i.def;return '- '+i.n+(q?' ('+q+')':'')}).join('\n');
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();
+    toast(ok?'Lista copiada':'No se pudo copiar')},
+  theme(d){S.theme=d.t;applyTheme();save();render()},
+  curweek(d){setCurWeek(+d.w);save();render();toast('Ahora estamos en la semana '+(+d.w+1))},
+  export(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:'application/json'}));
+    a.download='nuestro-menu-'+iso(new Date())+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);toast('Archivo exportado')},
+  reset(){if(!confirm('¿Restablecer el menú y las recetas iniciales? Se perderán vuestros cambios (exporta antes si quieres conservarlos).'))return;
+    const th=S.theme;S=seed();S.theme=th;save();render();toast('Menú inicial restablecido')}
+};
+const C={
+  qty(el){const k=el.dataset.k,v=el.value.trim();
+    if(k[0]==='x'&&S.shop.extra.some(x=>'x'+x.id===k)){S.shop.extra.find(x=>'x'+x.id===k).q=v}
+    else if(v)S.shop.qty[k]=v;else delete S.shop.qty[k];
+    save();render()},
+  pickall(el){M.all=el.checked;$('#pickList').innerHTML=pickList()},
+  import(el){const f=el.files[0];if(!f)return;const rd=new FileReader();
+    rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!valid(o))throw 0;
+      if(confirm('¿Sustituir todos los datos actuales por los del archivo?')){S=fix(o);applyTheme();save();render();toast('Datos importados')}}
+      catch(e){toast('El archivo no es una copia válida de Nuestro Menú')}el.value=''};
+    rd.readAsText(f)}
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const f=A[el.dataset.a];if(f)f(el.dataset,e,el)});
+document.addEventListener('change',e=>{const c=e.target.dataset&&e.target.dataset.c;if(c&&C[c])C[c](e.target)});
+document.addEventListener('input',e=>{
+  if(e.target.id==='recSearch'){U.rs=e.target.value;$('#recGrid').innerHTML=recCards()}
+  if(e.target.id==='pickSearch'){M.q=e.target.value;$('#pickList').innerHTML=pickList()}});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&M){M=null;renderModal()}
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('.rc,label.btn')){e.preventDefault();e.target.click()}
+  if(e.key==='Enter'&&(e.target.id==='xn'||e.target.id==='xq'))A.xadd()});
+
+applyTheme();U.pw=curWeek();U.pd=todayIdx();save();render();
+// Solo en la versión alojada (https): guarda la app en el móvil para que funcione sin conexión
+if('serviceWorker' in navigator&&(location.protocol==='https:'||/^(localhost|127\.0\.0\.1)$/.test(location.hostname)))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>
