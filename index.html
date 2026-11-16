@@ -33,7 +33,9 @@
   }
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+/* touch-action evita el zoom al tocar dos veces seguidas */
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+button,nav,.days,.seg,.rc,.logo{-webkit-user-select:none;user-select:none}
 /* Tipografía de Apple (San Francisco): es la fuente del sistema en iPhone y Mac */
 body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.47 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:-.022em;-webkit-font-smoothing:antialiased;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
 h1,h2,h3,h4{margin:0;font-weight:600}
@@ -54,7 +56,7 @@ nav button.on{color:var(--text);background:var(--card)}
 nav .ni{font-size:1.15rem}
 @media (max-width:799px){
   nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--bg);background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
-  nav button{flex:1;flex-direction:column;gap:0;font-size:.68rem;padding:6px 2px;min-height:56px;justify-content:center;border-radius:14px;letter-spacing:0}
+  nav button{flex:1;min-width:0;flex-direction:column;gap:0;font-size:.64rem;padding:6px 2px;min-height:56px;justify-content:center;border-radius:14px;letter-spacing:0}
   nav button.on{background:none}
   nav button:not(.on) .ni{opacity:.55}
 }
@@ -94,7 +96,7 @@ main{max-width:1000px;margin:auto;padding:18px 20px}
 .seg button{border:0;background:none;border-radius:9px;padding:7px 14px;min-height:38px;cursor:pointer;font-weight:500;font-size:.92rem;color:var(--text)}
 .seg button.on{background:var(--segon);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .seg4{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:520px}
-.seg4 button{padding:7px 2px}
+.seg4 button{padding:7px 2px;font-size:.86rem}
 .chip{font-size:.84rem;color:var(--muted);white-space:nowrap}
 .meta{display:flex;gap:4px 12px;flex-wrap:wrap;margin-top:5px}
 .ricon{width:52px;height:52px;flex:none;border-radius:15px;background:var(--tile);display:grid;place-items:center;font-size:1.65rem}
@@ -147,7 +149,13 @@ label.f{display:block;font-weight:600;font-size:.88rem;margin:16px 0 6px}
 .bought .check{background:var(--ok);border-color:var(--ok);color:#fff}
 .bought .sname{text-decoration:line-through;color:var(--muted)}
 .sname{flex:1;min-width:0}
-.sqty{width:112px!important;min-height:38px!important;padding:5px 10px!important;text-align:right;flex:none;font-size:.92rem}
+.sqty{width:112px!important;min-height:38px!important;padding:5px 10px!important;text-align:right;flex:none;font-size:16px}
+.iqty{width:78px!important}
+.iunit{width:64px;flex:none;color:var(--muted);font-size:.82rem;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.out .sname{color:var(--muted)}
+.tag{font-size:.72rem;background:var(--soft);border-radius:99px;padding:1px 8px;color:var(--muted);margin-left:4px;letter-spacing:0;white-space:nowrap}
+.invadd{display:grid;grid-template-columns:2fr 84px 110px 1.2fr auto;gap:8px}
+@media (max-width:640px){.invadd{grid-template-columns:1fr 1fr}.invadd #vn,.invadd #vl,.invadd .btn{grid-column:1/-1}}
 .sqty.ov{border-color:var(--text)}
 .gtitle{font-weight:600;margin:0 0 6px}
 .ov-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
@@ -314,18 +322,18 @@ function fq(q){const w=Math.floor(q),f=Math.round((q-w)*100)/100,fr={0.25:'¼',0
   return fr?(w||'')+fr:String(Math.round(q*100)/100).replace('.',',')}
 function fu(q,u){return (q<=1&&/^(rebanadas|lonchas|latas|dientes)$/.test(u))?u.slice(0,-1):(u||'')}
 function ingText(i){return i.q==null?'al gusto':(fq(i.q)+' '+fu(i.q,i.u)).trim()}
-function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2200)}
+function toast(t,ms){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),ms||2200)}
 
 /* ============ ESTADO Y ALMACENAMIENTO ============ */
 function seed(){
   const recipes=SEED.map((r,i)=>({id:'r'+(i+1),name:r[0],cat:r[1],time:r[2],diff:r[3],icon:r[4],fav:false,
     ing:r[5].split(';').map(s=>{const p=s.split(':');return {n:p[0],q:p[1]?+p[1]:null,u:p[2]||''}}),steps:r[6].slice()}));
   const plan=[0,1,2,3].map(w=>[0,1,2,3,4,5,6].map(d=>({d:'r'+(w*14+d*2+1),c:'r'+(w*14+d*2+2)})));
-  return {v:2,recipes,plan,done:{},shop:{weeks:[true,true,true,true],have:{},bought:{},qty:{},extra:[]},theme:'auto',start:iso(monday(new Date()))};
+  return {v:2,recipes,plan,done:{},shop:{weeks:[true,true,true,true],have:{},bought:{},qty:{},extra:[]},inv:[],used:{},theme:'auto',start:iso(monday(new Date()))};
 }
 function valid(o){return o&&Array.isArray(o.recipes)&&o.recipes.every(r=>r&&r.id&&r.name&&Array.isArray(r.ing)&&Array.isArray(r.steps))
   &&Array.isArray(o.plan)&&(o.plan.length===3||o.plan.length===4)&&o.plan.every(w=>Array.isArray(w)&&w.length===7)}
-function fix(o){const b=seed();o.done=o.done||{};o.shop=Object.assign(b.shop,o.shop||{});o.theme=o.theme||'auto';o.start=o.start||b.start;
+function fix(o){const b=seed();o.done=o.done||{};o.inv=Array.isArray(o.inv)?o.inv:[];o.used=o.used||{};o.shop=Object.assign(b.shop,o.shop||{});o.theme=o.theme||'auto';o.start=o.start||b.start;
   // Datos guardados con la versión de 3 semanas: se añade la semana 4 y sus recetas sin tocar lo demás
   if(o.plan.length<4){b.recipes.slice(42).forEach(r=>{if(!o.recipes.some(x=>x.id===r.id))o.recipes.push(r)});o.plan.push(b.plan[3])}
   while(o.shop.weeks.length<4)o.shop.weeks.push(true);o.v=2;return o}
@@ -333,7 +341,7 @@ let storageOk=true;
 function load(){try{const o=JSON.parse(localStorage.getItem(KEY));if(valid(o))return fix(o)}catch(e){}return seed()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));storageOk=true}catch(e){storageOk=false;toast('⚠️ No se pudo guardar en este navegador')}}
 let S=load();
-const U={view:'hoy',hd:null,pw:0,pd:0,pf:'all',rf:'all',rs:''};
+const U={view:'hoy',hd:null,pw:0,pd:0,pf:'all',rf:'all',rs:'',if:'all'};
 let M=null; // ventana abierta
 
 const rec=id=>S.recipes.find(r=>r.id===id);
@@ -435,7 +443,7 @@ function shopItems(){
   S.plan.forEach((wk,w)=>{if(!S.shop.weeks[w])return;wk.forEach(day=>{for(const m of 'dc'){const r=rec(day[m]);if(!r)continue;
     r.ing.forEach(i=>{if(!i.n)return;const k=norm(i.n)+'|'+(i.q==null?'':norm(i.u));let it=map.get(k);
       if(!it){it={k,n:i.n,u:i.u,q:i.q==null?null:0};map.set(k,it)}if(i.q!=null)it.q+=i.q})}})});
-  const out=[...map.values()].map(it=>({k:it.k,n:it.n,def:it.q==null?'al gusto':/^(g|ml)$/.test(it.u)&&it.q>=1000?String(Math.round(it.q/10)/100).replace('.',',')+(it.u==='g'?' kg':' l'):(fq(it.q)+' '+fu(it.q,it.u)).trim()}));
+  const out=[...map.values()].map(it=>({k:it.k,n:it.n,q:it.q,u:it.u,def:it.q==null?'al gusto':/^(g|ml)$/.test(it.u)&&it.q>=1000?String(Math.round(it.q/10)/100).replace('.',',')+(it.u==='g'?' kg':' l'):(fq(it.q)+' '+fu(it.q,it.u)).trim()}));
   S.shop.extra.forEach(x=>out.push({k:'x'+x.id,n:x.n,def:x.q||'',extra:true}));
   return out.sort((a,b)=>a.n.localeCompare(b.n,'es'))}
 function shopRow(it){const b=S.shop.bought[it.k],ov=!it.extra&&S.shop.qty[it.k]!=null,k=esc(it.k);
@@ -451,7 +459,7 @@ function vCompra(){
   const groups={};pend.forEach(i=>{const g=i.extra?'🧺 Otros':groupOf(i.n);(groups[g]=groups[g]||[]).push(i)});
   return `<h1>Lista de compra</h1><p class="sub">Se calcula sumando los ingredientes de las semanas elegidas.</p>
   <div class="toolbar"><div class="seg seg4">${[0,1,2,3].map(i=>`<button class="${S.shop.weeks[i]?'on':''}" data-a="sweek" data-w="${i}" aria-pressed="${S.shop.weeks[i]}">Semana ${i+1}</button>`).join('')}</div>
-  <span class="grow"></span><button class="btn sm" data-a="copy">📋 Copiar lista</button><button class="btn sm" data-a="clearb">Desmarcar comprados</button></div>
+  <span class="grow"></span><button class="btn sm" data-a="copy">📋 Copiar lista</button><button class="btn sm" data-a="clearb">Desmarcar comprados</button><button class="btn sm" data-a="tostock">📦 Comprados al inventario</button></div>
   <p class="sub" style="margin-bottom:14px"><b>${pend.length-nb}</b> por comprar · ${nb} comprados · ${have.length} en casa. Pulsa 🏠 si ya lo tenéis; la cantidad se puede editar.</p>
   ${pend.length?'':'<p class="empty card">No hay nada que comprar con esta selección.</p>'}
   <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))">${ORDER.filter(g=>groups[g]).map(g=>`<div class="card"><p class="gtitle">${g}</p>${groups[g].map(shopRow).join('')}</div>`).join('')}</div>
@@ -460,11 +468,70 @@ function vCompra(){
     <input type="text" id="xq" placeholder="Cantidad" style="flex:1;min-width:100px" aria-label="Cantidad"><button class="btn pri" data-a="xadd">Añadir</button></div>
   ${have.length?`<h2>🏠 Ya tenemos en casa</h2><div class="card">${have.map(shopRow).join('')}</div>`:''}`}
 
+/* ============ INVENTARIO ============ */
+const LOCS=[['despensa','🫙','Despensa'],['nevera','🧊','Nevera'],['congelador','❄️','Congelador']];
+const USE_ORDER=['nevera','despensa','congelador']; // de dónde se gasta primero
+// Clave para comparar nombres: sin acentos ni mayúsculas y sin la «s» final («Huevo» = «Huevos»)
+const ikey=n=>norm(n).split(/\s+/).map(w=>w.length>3?w.replace(/s$/,''):w).join(' ');
+// Pasa cantidad y unidad a una base común (g, ml o la unidad en singular) para poder sumar y restar
+function base(q,u){u=norm(u||'');
+  if(/^(kg|kilos?)$/.test(u))return{q:q*1000,u:'g',f:1000};
+  if(/^(g|gr|gramos?)$/.test(u))return{q,u:'g',f:1};
+  if(/^(l|litros?)$/.test(u))return{q:q*1000,u:'ml',f:1000};
+  if(u==='ml')return{q,u:'ml',f:1};
+  if(/^(|u|ud|uds|unidad|unidades)$/.test(u))return{q,u:'ud',f:1};
+  return{q,u:u.replace(/s$/,''),f:1}}
+const r2=x=>Math.round(x*100)/100;
+const numOrNull=t=>{const q=parseFloat(String(t).replace(',','.'));return isNaN(q)?null:Math.max(0,q)};
+function parseQty(t){const m=String(t||'').trim().match(/^(\d+(?:[.,]\d+)?)\s*(.*)$/);return m?{q:parseFloat(m[1].replace(',','.')),u:m[2].trim()}:null}
+function guessLoc(n){const s=norm(n);
+  if(/congelad|frutos rojos|helad/.test(s))return 'congelador';
+  if(/patata|cebolla|ajo\b|platano|aguacate|triturad|lata|atun|sardin|aceit|harina|noodle|avena|arroz|pasta|tortita|pan\b|miel|nuez|nueces|almendra|sal\b|salsa|vinagre|pimienta|pimenton|oregano|canela|perejil/.test(s))return 'despensa';
+  return /Frutas|Carne|Huevos/.test(groupOf(n))?'nevera':'despensa'}
+function invAdd(n,q,u,loc){const k=ikey(n),bu=base(1,u).u,x=S.inv.find(i=>i.loc===loc&&ikey(i.n)===k&&base(1,i.u).u===bu);
+  if(!x){S.inv.push({id:uid(),n,q,u:u||'',loc});return}
+  if(q!=null){const b=base(q,u),xb=base(x.q||0,x.u);x.q=r2((xb.q+b.q)/xb.f)}}
+// Descuenta del inventario los ingredientes de una receta y devuelve lo descontado (para poder deshacerlo)
+function consume(r){const log=[],miss=[];
+  r.ing.forEach(i=>{if(i.q==null||!i.n)return;const need=base(i.q,i.u),k=ikey(i.n);let left=need.q;
+    S.inv.filter(x=>x.q!=null&&ikey(x.n)===k&&base(x.q,x.u).u===need.u).sort((a,b)=>USE_ORDER.indexOf(a.loc)-USE_ORDER.indexOf(b.loc))
+      .forEach(x=>{if(left<=0)return;const b=base(x.q,x.u),take=Math.min(b.q,left);if(take<=0)return;
+        x.q=r2((b.q-take)/b.f);left=r2(left-take);log.push({id:x.id,a:take/b.f})});
+    if(left>0.001)miss.push(i.n)});
+  return{log,miss}}
+function giveBack(log){let n=0;(log||[]).forEach(l=>{const x=S.inv.find(i=>i.id===l.id);if(x&&x.q!=null){x.q=r2(x.q+l.a);n++}});return n}
+function invRow(x){const out=x.q!=null&&x.q<=0;
+  return `<div class="srow ${out?'out':''}"><span class="sname">${esc(x.n)}${out?' <small class="tag">agotado</small>':''}</span>
+  <input type="text" inputmode="decimal" class="sqty iqty" data-c="invqty" data-id="${x.id}" value="${x.q==null?'':esc(String(x.q).replace('.',','))}" placeholder="—" aria-label="Cantidad de ${esc(x.n)}">
+  <span class="iunit">${esc(x.u||'')}</span>
+  <button class="btn sm ic" data-a="invedit" data-id="${x.id}" aria-label="Editar ${esc(x.n)}">✎</button></div>`}
+function vInv(){const f=U.if,def=f==='all'?'despensa':f,nout=S.inv.filter(x=>x.q!=null&&x.q<=0).length;
+  const secs=LOCS.filter(l=>f==='all'||f===l[0]).map(l=>{const it=S.inv.filter(x=>x.loc===l[0]).sort((a,b)=>a.n.localeCompare(b.n,'es'));
+    return `<div class="card"><p class="gtitle">${l[1]} ${l[2]} <small class="sub">· ${it.length}</small></p>${it.length?it.map(invRow).join(''):'<p class="sub" style="margin:0">Vacío.</p>'}</div>`}).join('');
+  return `<h1>Inventario</h1><p class="sub">Lo que hay en casa. Al marcar una comida como preparada se descuentan sus ingredientes.</p>
+  <div class="toolbar"><div class="seg seg4">${[['all','Todo']].concat(LOCS.map(l=>[l[0],l[2]])).map(x=>`<button class="${f===x[0]?'on':''}" data-a="ifilter" data-f="${x[0]}">${x[1]}</button>`).join('')}</div>
+  ${nout?`<span class="grow"></span><button class="btn sm" data-a="invclean">Quitar agotados (${nout})</button>`:''}</div>
+  <div class="card"><p class="gtitle">Añadir producto</p><div class="invadd"><input type="text" id="vn" list="ingnames" data-c="invname" placeholder="Producto" aria-label="Producto">
+    <input type="text" inputmode="decimal" id="vq" placeholder="Cant." aria-label="Cantidad"><input type="text" id="vu" list="units" placeholder="Unidad" aria-label="Unidad">
+    <select id="vl" aria-label="Dónde se guarda">${LOCS.map(l=>`<option value="${l[0]}" ${def===l[0]?'selected':''}>${l[1]} ${l[2]}</option>`).join('')}</select>
+    <button class="btn pri" data-a="invadd">Añadir</button></div></div>
+  <div class="grid2" style="margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">${secs}</div>
+  ${S.inv.length?'':'<p class="note" style="margin-top:14px">Consejo: en «Compra», marca lo que has comprado y pulsa «📦 Comprados al inventario» para rellenarlo de una vez.</p>'}
+  <datalist id="ingnames">${[...new Set(S.recipes.flatMap(r=>r.ing.map(i=>i.n)))].sort((a,b)=>a.localeCompare(b,'es')).map(n=>`<option value="${esc(n)}">`).join('')}</datalist>`}
+function mInv(){const x=S.inv.find(i=>i.id===M.id);if(!x){M=null;return ''}
+  return `<div class="mtop"><h2 style="margin:0">Editar producto</h2><button class="btn sm ic" data-a="close" aria-label="Cerrar">✕</button></div>
+  <label class="f" for="mn">Nombre</label><input type="text" id="mn" list="ingnames" value="${esc(x.n)}">
+  <div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
+    <div><label class="f" for="mq">Cantidad</label><input type="text" inputmode="decimal" id="mq" value="${x.q==null?'':esc(String(x.q).replace('.',','))}"></div>
+    <div><label class="f" for="mu">Unidad</label><input type="text" id="mu" list="units" value="${esc(x.u||'')}"></div>
+    <div><label class="f" for="ml">Dónde se guarda</label><select id="ml">${LOCS.map(l=>`<option value="${l[0]}" ${x.loc===l[0]?'selected':''}>${l[1]} ${l[2]}</option>`).join('')}</select></div></div>
+  <div class="row" style="margin-top:20px"><button class="btn pri grow" data-a="invsave">Guardar</button><button class="btn warn" data-a="invdel">🗑 Eliminar</button></div>`}
+
 function vAjustes(){const cw=curWeek();return `<h1>Ajustes</h1>
   <h2>Apariencia</h2><div class="card"><div class="seg">${[['auto','Automático'],['light','☀️ Claro'],['dark','🌙 Oscuro']].map(t=>`<button class="${S.theme===t[0]?'on':''}" data-a="theme" data-t="${t[0]}">${t[1]}</button>`).join('')}</div></div>
   <h2>¿En qué semana del menú estamos?</h2><div class="card"><p class="sub" style="margin-bottom:10px">El menú rota cada 4 semanas. Cambia aquí la semana actual si queréis empezar por otra.</p>
     <div class="seg seg4">${[0,1,2,3].map(i=>`<button class="${i===cw?'on':''}" data-a="curweek" data-w="${i}">Semana ${i+1}</button>`).join('')}</div></div>
-  <h2>Copia de seguridad</h2><div class="card"><p class="sub" style="margin-bottom:12px">Guarda todos vuestros datos (recetas, menú, lista de compra) en un archivo, o recupéralos desde uno.</p>
+  <h2>Copia de seguridad</h2><div class="card"><p class="sub" style="margin-bottom:12px">Guarda todos vuestros datos (recetas, menú, lista de compra e inventario) en un archivo, o recupéralos desde uno.</p>
     <div class="row"><button class="btn pri" data-a="export">⬇️ Exportar datos (JSON)</button>
     <label class="btn" tabindex="0">⬆️ Importar datos<input type="file" accept=".json,application/json" data-c="import" hidden></label>
     <button class="btn warn" data-a="reset">Restablecer menú inicial</button></div></div>
@@ -502,11 +569,11 @@ function mPick(){return `<div class="mtop"><div><h2 style="margin:0">Cambiar rec
   <div class="card" id="pickList">${pickList()}</div>`}
 
 /* ============ RENDER ============ */
-const NAV=[['hoy','🏠','Hoy'],['plan','📅','Plan'],['rec','📖','Recetas'],['compra','🛒','Compra'],['ajustes','⚙️','Ajustes']];
-const VIEWS={hoy:vHoy,plan:vPlan,rec:vRec,compra:vCompra,ajustes:vAjustes};
+const NAV=[['hoy','🏠','Hoy'],['plan','📅','Plan'],['rec','📖','Recetas'],['compra','🛒','Compra'],['inv','📦','Inventario'],['ajustes','⚙️','Ajustes']];
+const VIEWS={hoy:vHoy,plan:vPlan,rec:vRec,compra:vCompra,inv:vInv,ajustes:vAjustes};
 function renderModal(){const el=$('#modal');
   if(!M){el.innerHTML='';document.body.style.overflow='';return}
-  const h=M.type==='recipe'?mRecipe():M.type==='edit'?mEdit():mPick();
+  const h=M.type==='recipe'?mRecipe():M.type==='edit'?mEdit():M.type==='inv'?mInv():mPick();
   if(!M){el.innerHTML='';document.body.style.overflow='';return}
   el.innerHTML=`<div class="ov-bg" data-a="bgclose"><div class="modal" role="dialog" aria-modal="true">${h}</div></div>`;document.body.style.overflow='hidden'}
 function render(){
@@ -522,7 +589,28 @@ const A={
   open(d){M={type:'recipe',id:d.id,slot:d.w!=null?{w:+d.w,d:+d.d,m:d.m}:null};renderModal()},
   close(){M=null;renderModal()},
   bgclose(d,e){if(e.target.classList.contains('ov-bg')&&(!M||M.type!=='edit')){M=null;renderModal()}},
-  done(d){const k=dk(d.w,d.d,d.m);if(isDone(+d.w,+d.d,d.m))delete S.done[k];else S.done[k]=occ(+d.w);save();render()},
+  done(d){const w=+d.w,dd=+d.d,k=dk(w,dd,d.m),r=rec(S.plan[w][dd][d.m]);let msg='';
+    if(isDone(w,dd,d.m)){delete S.done[k];if(giveBack(S.used[k]))msg='Ingredientes devueltos al inventario';delete S.used[k]}
+    else{S.done[k]=occ(w);delete S.used[k];
+      if(r&&S.inv.length){const c=consume(r),n=new Set(c.log.map(l=>l.id)).size;S.used[k]=c.log;
+        if(n)msg='Inventario: '+n+(n>1?' productos descontados':' producto descontado');
+        if(c.miss.length)msg+=(msg?' · ':'')+'Sin existencias: '+c.miss.slice(0,3).join(', ')+(c.miss.length>3?'…':'')}}
+    save();render();if(msg)toast(msg,4000)},
+  ifilter(d){U.if=d.f;render()},
+  invadd(){const n=$('#vn').value.trim();if(!n){$('#vn').focus();return}
+    invAdd(n,numOrNull($('#vq').value),$('#vu').value.trim(),$('#vl').value);save();render();$('#vn').focus()},
+  invedit(d){M={type:'inv',id:d.id};renderModal()},
+  invsave(){const x=S.inv.find(i=>i.id===M.id),n=$('#mn').value.trim();if(!n){$('#mn').focus();return}
+    Object.assign(x,{n,q:numOrNull($('#mq').value),u:$('#mu').value.trim(),loc:$('#ml').value});save();M=null;render()},
+  invdel(){S.inv=S.inv.filter(i=>i.id!==M.id);save();M=null;render()},
+  invclean(){S.inv=S.inv.filter(x=>!(x.q!=null&&x.q<=0));save();render()},
+  tostock(){const its=shopItems().filter(i=>S.shop.bought[i.k]&&!S.shop.have[i.k]);if(!its.length){toast('Marca primero lo que has comprado');return}
+    its.forEach(i=>{let q=i.q,u=i.u||'';const t=i.extra?i.def:S.shop.qty[i.k];
+      if(t!=null){const p=parseQty(t);if(p){q=p.q;u=p.u||u}else if(i.extra){q=null;u=''}}
+      invAdd(i.n,q==null?null:q,u,guessLoc(i.n));
+      if(i.extra)S.shop.extra=S.shop.extra.filter(x=>'x'+x.id!==i.k);else S.shop.have[i.k]=true;
+      delete S.shop.bought[i.k]});
+    save();render();toast(its.length+(its.length>1?' productos guardados':' producto guardado')+' en el inventario',3500)},
   fav(d){const r=rec(d.id);r.fav=!r.fav;save();render()},
   change(d){M={type:'pick',w:+d.w,d:+d.d,m:d.m,all:false,q:''};renderModal()},
   pick(d){S.plan[M.w][M.d][M.m]=d.id;save();M=null;render();toast('Receta cambiada')},
@@ -557,13 +645,16 @@ const A={
   export(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:'application/json'}));
     a.download='nuestro-menu-'+iso(new Date())+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);toast('Archivo exportado')},
   reset(){if(!confirm('¿Restablecer el menú y las recetas iniciales? Se perderán vuestros cambios (exporta antes si quieres conservarlos).'))return;
-    const th=S.theme;S=seed();S.theme=th;save();render();toast('Menú inicial restablecido')}
+    const th=S.theme,inv=S.inv;S=seed();S.theme=th;S.inv=inv;save();render();toast('Menú inicial restablecido')}
 };
 const C={
   qty(el){const k=el.dataset.k,v=el.value.trim();
     if(k[0]==='x'&&S.shop.extra.some(x=>'x'+x.id===k)){S.shop.extra.find(x=>'x'+x.id===k).q=v}
     else if(v)S.shop.qty[k]=v;else delete S.shop.qty[k];
     save();render()},
+  invqty(el){const x=S.inv.find(i=>i.id===el.dataset.id);if(!x)return;x.q=numOrNull(el.value);save();render()},
+  invname(el){const k=ikey(el.value);if(!k)return;let i;S.recipes.some(r=>(i=r.ing.find(g=>ikey(g.n)===k)));
+    if(i&&!$('#vu').value)$('#vu').value=i.u||'';if(U.if==='all')$('#vl').value=guessLoc(el.value)},
   pickall(el){M.all=el.checked;$('#pickList').innerHTML=pickList()},
   import(el){const f=el.files[0];if(!f)return;const rd=new FileReader();
     rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!valid(o))throw 0;
@@ -579,7 +670,9 @@ document.addEventListener('input',e=>{
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&M){M=null;renderModal()}
   if((e.key==='Enter'||e.key===' ')&&e.target.matches('.rc,label.btn')){e.preventDefault();e.target.click()}
-  if(e.key==='Enter'&&(e.target.id==='xn'||e.target.id==='xq'))A.xadd()});
+  if(e.key==='Enter'&&(e.target.id==='xn'||e.target.id==='xq'))A.xadd();
+  if(e.key==='Enter'&&/^(vn|vq|vu)$/.test(e.target.id))A.invadd();
+  if(e.key==='Enter'&&/^(mn|mq|mu)$/.test(e.target.id))A.invsave()});
 
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{applyTheme();render()});
 applyTheme();U.pw=curWeek();U.pd=todayIdx();save();render();
